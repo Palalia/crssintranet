@@ -25,12 +25,12 @@ class SuperAdminSeeder extends Seeder
             'email'=> 'c3za1@gmail.com',
             'password'=> bcrypt('12345678')
         ]);
+/*
+        $rol = Role::create(['name'=>'ADMINISTRADOR']);
 
-       // $rol = Role::create(['name'=>'ADMINISTRADOR']);
+        $permisos = Permission::pluck('id', 'id')->all();
 
-       // $permisos = Permission::pluck('id', 'id')->all();
-
-       // $rol->syncPermissions($permisos);
+        $rol->syncPermissions($permisos);*/
 
         $usuario->assignRole('ADMINISTRADOR');
     }

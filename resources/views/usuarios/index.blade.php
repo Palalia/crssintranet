@@ -39,13 +39,15 @@
 
                                             {{-- boton para editar --}}
                                             <td>
+                                                @can('editar-usuario')
                                                 <a class="btn btn-info" href="{{route('usuarios.edit', $usuario->id)}}">EDITAR</a>
-
+                                                @endcan
                                             {{-- boton eliminar --}}
+                                                @can('editar-usuario')
                                                 {!! Form::open(['method'=> 'DELETE', 'route'=> ['usuarios.destroy', $usuario->id], 'style'=>'display:inline']) !!}
                                                     {!! Form::submit('Borrar', ['class'=> 'btn btn-danger']) !!}
-
                                                 {!! Form::close() !!}
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
