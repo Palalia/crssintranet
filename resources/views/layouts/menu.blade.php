@@ -17,4 +17,7 @@
         <i class=" fas fa-blog"></i><span>BLOGS</span>
     </a>
     @endcan
+    <a class="nav-link" href="/prospectos">
+        <i class=" fas fa-blog"></i><span>Prospectos</span>
+    </a>
 </li>
