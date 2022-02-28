@@ -1,0 +1,74 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateExpedientesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('clientes', function (Blueprint $table) {
+          
+            $table->id();
+            $table->string('nombre');
+        });
+        Schema::create('estados', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+        });
+        Schema::create('campus', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            
+            $table->string('direccion');
+            $table->Integer('url_maps');
+            $table->Integer('cantidad_personal');
+            $table->Integer('sueldo_autorizado');
+            $table->foreignId('idestado')->references('id')->on('estados');
+            $table->foreignId('idcliente')->references('id')->on('clientes');
+        });
+        Schema::create('expedientes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+
+            $table->string('apellido_paterno');
+            $table->string('apellido_materno');
+            $table->date('fecha_nacimiento');
+            $table->Integer('edad');
+            $table->string('curp');
+            $table->string('nacionalidad');
+            $table->float('sueldo_diario')->nullable();
+            $table->string('foto')->nullable();
+            $table->string('cuip')->nullable();
+            //vigencia
+            $table->date('fecha_ingreso');
+            $table->date('inicio_contrato');
+            $table->date('final_contrato');
+            $table->string('horario')->nullable();
+            $table->enum('status',['pospecto','contratado','baja']);//prospecto,contratado,baja
+            $table->timestamps();
+            $table->foreignId('idcampus')->references('id')->on('campus')->nullable();
+            $table->foreignId('idpuesto')->references('id')->on('roles')->nullable();               
+            $table->foreignId('idestado')->references('id')->on('estados')->nullable();       
+        });
+    }
+    
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('expedientes');
+        Schema::dropIfExists('campus');
+        Schema::dropIfExists('estados');
+        Schema::dropIfExists('clientes');
+    }
+}
