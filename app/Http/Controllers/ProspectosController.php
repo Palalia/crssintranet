@@ -3,36 +3,44 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
-
+use App\Models\Campus;
+use App\Models\Cliente;
+use Spatie\Permission\Models\Role;
 class ProspectosController extends Controller
 {
     public function index()
-    {
-        return view('prospectos.registrar');
+    {   
+        $campus=collect(); 
+        $clientes=collect();
+        $puestos=collect();    
+        foreach (Campus::pluck('nombre')->all() as $unidad)
+            $campus->push($unidad);
+        foreach (Cliente::pluck('nombre')->all() as $unidad)
+            $clientes->push($unidad);
+        foreach (Role::pluck('name')->all() as $unidad)
+            $puestos->push($unidad);    
+        return view('prospectos.registrar',compact('campus','clientes','puestos'));
     }
     public function store(Request $request)
     {
         Log::debug($request);
-        /*$validator=Validator::make($request->all(), [
-            'estado'=>'required|unique:estado,nombreEstado',
+      $this->validate($request,[
+            'estado'=>'required|exists:estados,nombre',
             'nombre' => 'required',
             'appaterno' => 'required',
             'apmaterno' => 'required',
             'fechanacimiento' => 'required',
-            'edad' => 'required|numbre',
-            'CURPPG' => 'required|unique:personal,curp',
-            'sueldomensual' => 'number',
-            'sueldoquincenal' => 'number',
-            'sueldodiario' => 'number',
+            'edad' => 'required|numeric',
+            'CURPPG' => 'required|unique:expedientes,curp',
+            'sueldodiario' => 'numeric',
             'imagen' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
-            'numsegurosocial' => 'number',
-            //Validar puesto
-            'cuip' => 'number',
+            'numsegurosocial' => 'numeric',
+            'puesto'=>'required|exists:roles,name',
+            'cuip' => 'string',
             'vigencia' => 'date|after:tomorrow',
             'fechaIngreso' => 'date',
-        ]);*/
-        if($validator->fails())
-        return response()->json(['message'=>"Validation Failed",'erro'=>$validator->errors()],422);
+        ]);
+        $input=$request->all();
         try {
             $user = User::create([
             'estado'=>$request->input('estado'),

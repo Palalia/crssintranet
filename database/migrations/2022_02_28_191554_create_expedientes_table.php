@@ -14,24 +14,27 @@ class CreateExpedientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-          
             $table->id();
             $table->string('nombre');
+            $table->timestamps();
         });
         Schema::create('estados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->timestamps();
         });
         Schema::create('campus', function (Blueprint $table) {
             $table->id();
+            $table->integer('idestado');
+            $table->integer('idcliente');
             $table->string('nombre');
-            
             $table->string('direccion');
-            $table->Integer('url_maps');
-            $table->Integer('cantidad_personal');
+            $table->string('url_maps');
+            $table->Integer('cantidad_personal')->nullable();
             $table->Integer('sueldo_autorizado');
             $table->foreignId('idestado')->references('id')->on('estados');
             $table->foreignId('idcliente')->references('id')->on('clientes');
+            $table->timestamps();
         });
         Schema::create('expedientes', function (Blueprint $table) {
             $table->id();

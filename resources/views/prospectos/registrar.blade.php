@@ -6,16 +6,27 @@
   <div class="section-header">
     <h3 class="page__heading">REGISTRO DE PROSPECTOS</h3>
   </div> 
+  @if ($errors->any())
+    <div class="alert alert-dark alert-dismissible fade show" role="alert">
+      <strong>¡REVISE LOS CAMPOS!</strong>
+      @foreach ($errors->all() as $error )
+        <span class="badge badge-danger">{{$error}}</span>
+       @endforeach
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
   {!! Form::open(array('route'=>'prospectos.store', 'method'=>'POST')) !!}
    <label for="cbx_estado"> Selecciona un Cliente:</label>
-<!--<select class="form-control" id="cbx_cliente" name="cbx_cliente" required>-->
-    <select class="form-control" id="cbx_cliente" name="cbx_cliente">
-      <option value="0">CLIENTE</option>
-   </select>
+   {!! Form::select('clientes[]', $clientes,[], array('class'=>'form-control')) !!}
+    <!--<select class="form-control" id="cbx_cliente" name="cbx_cliente" required>-->
+    <!--<select class="form-control" id="cbx_cliente" name="cbx_cliente">-->
                  
    <label for="cbx_sucursal"> Selecciona el Campus:</label>
    <!--<select class="form-control" id="cbx_campus" name="cbx_campus" required></select>-->
-   <select class="form-control" id="cbx_campus" name="cbx_campus"></select>
+   {!! Form::select('campus[]', $campus,[], array('class'=>'form-control')) !!}
+   <!--<select class="form-control" id="cbx_campus" name="cbx_campus"></select>-->
    <label for="Nombre">Estado</label>
    <input class="form-control" type="text" id="estado" name="estado" aria-label="Default" aria-describedby="inputGroup-sizing-default">
    <label for="Nombre">Nombre (s)</label>
@@ -33,12 +44,6 @@
    <input class="form-control" type="text" id="CURPPG" name="CURPPG" onBlur="comprobarCurp()">
    <p><img src="LoaderIcon.gif" id="loaderIcon"  style="display:none" /></p>
    <span id="estadocurp"></span>
-   <label for="Nombre">SUELDO MENSUAL</label>
-   <!--<input class="form-control" type="text" id="sueldomensual" name="sueldomensual" aria-label="Default" aria-describedby="inputGroup-sizing-default" required value="">-->
-   <input class="form-control" type="text" id="sueldomensual" name="sueldomensual" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="">
-   <label for="Nombre">SUELDO QUINCENAL</label>
-   <!--   <input class="form-control" type="text" id="sueldoquincenal" name="sueldoquincenal" aria-label="Default" aria-describedby="inputGroup-sizing-default" required value="">--> 
-   <input class="form-control" type="text" id="sueldoquincenal" name="sueldoquincenal" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="">
    <label for="Nombre">SUELDO DIARIO</label>
    <!--   <input class="form-control" type="text" id="sueldodiario" name="sueldodiario" aria-label="Default" aria-describedby="inputGroup-sizing-default" required value="">-->
    <input class="form-control" type="text" id="sueldodiario" name="sueldodiario" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="">
@@ -47,14 +52,14 @@
    <label for="numsegurosocial">NUMERO SEGURO SOCIAL (NSS):</label>
    <input class="form-control" type="text" id="numsegurosocial" name="numsegurosocial">
    <label for="puesto">PUESTO:</label>
-   <input class="form-control" type="text" id="puesto" name="puesto">
+   {!! Form::select('puesto', $puestos,$puestos,array('class'=>'form-control')) !!}
+   <!--<input class="form-control" type="text" id="puesto" name="puesto">-->
    <label for="cuip">CUIP:</label>
    <input class="form-control" type="text" id="cuip" name="cuip">
    <label for="vigencia">VIGENCIA:</label>
    <input class="form-control" type="date" id="vigencia" name="vigencia">
    <label for="fechaIngreso">Fecha de Ingreso:</label>
    <input class="form-control" type="date" id="fechaIngreso" name="fechaIngreso">
-   <input id="IdUsuario" name="IdUsuarioReg" type="hidden" value="" />
    <button id="btn_enviar" type="submit" class="btn btn-primary btn-lg d-block mx-auto" style="background-color:green;" name="btn_enviar">REGISTRAR GUARDIA</button>
    {!! Form::close() !!}
 
