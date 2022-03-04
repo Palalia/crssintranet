@@ -25,8 +25,6 @@ class CreateExpedientesTable extends Migration
         });
         Schema::create('campus', function (Blueprint $table) {
             $table->id();
-            $table->integer('idestado');
-            $table->integer('idcliente');
             $table->string('nombre');
             $table->string('direccion');
             $table->string('url_maps');
