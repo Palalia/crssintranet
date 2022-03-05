@@ -28,7 +28,8 @@
    {!! Form::select('campus[]', $campus,[], array('class'=>'form-control')) !!}
    <!--<select class="form-control" id="cbx_campus" name="cbx_campus"></select>-->
    <label for="Nombre">Estado</label>
-   <input class="form-control" type="text" id="estado" name="estado" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+   {!! Form::select('estados[]', $estados,[], array('class'=>'form-control')) !!}
+   <!--<input class="form-control" type="text" id="estado" name="estado" aria-label="Default" aria-describedby="inputGroup-sizing-default">-->
    <label for="Nombre">Nombre (s)</label>
    <input class="form-control" type="text" id="nombre" name="nombre" aria-label="Default" aria-describedby="inputGroup-sizing-default">
    <label for="ApellidoP">Apellido Paterno </label>

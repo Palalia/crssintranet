@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Models\Campus;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 class ProspectosController extends Controller
 {
@@ -12,14 +13,17 @@ class ProspectosController extends Controller
     {   
         $campus=collect(); 
         $clientes=collect();
-        $puestos=collect();    
+        $puestos=collect();
+        $estados=collect();    
         foreach (Campus::pluck('nombre')->all() as $unidad)
             $campus->push($unidad);
         foreach (Cliente::pluck('nombre')->all() as $unidad)
             $clientes->push($unidad);
         foreach (Role::pluck('name')->all() as $unidad)
-            $puestos->push($unidad);    
-        return view('prospectos.registrar',compact('campus','clientes','puestos'));
+            $puestos->push($unidad);
+        foreach(DB::table('estados')->pluck('nombre')->all() as $estado)
+            $estados->push($estado);        
+        return view('prospectos.registrar',compact('campus','clientes','puestos','estados'));
     }
     public function store(Request $request)
     {
