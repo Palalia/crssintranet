@@ -17,18 +17,18 @@
       </button>
     </div>
   @endif
-  {!! Form::open(array('route'=>'prospectos.store', 'method'=>'POST')) !!}
+  {!! Form::open(array('route'=>'prospectos.store', 'method'=>'POST','enctype'=>'multipart/form-data')) !!}
    <label for="cbx_estado"> Selecciona un Cliente:</label>
-   {!! Form::select('clientes[]', $clientes,[], array('class'=>'form-control')) !!}
+   {!! Form::select('cliente', $clientes,[], array('class'=>'form-control','placeholder' => 'Seleccione un cliente...','required' => 'required')) !!}
     <!--<select class="form-control" id="cbx_cliente" name="cbx_cliente" required>-->
     <!--<select class="form-control" id="cbx_cliente" name="cbx_cliente">-->
                  
    <label for="cbx_sucursal"> Selecciona el Campus:</label>
    <!--<select class="form-control" id="cbx_campus" name="cbx_campus" required></select>-->
-   {!! Form::select('campus[]', $campus,[], array('class'=>'form-control')) !!}
+   {!! Form::select('campus', $campus,null, array('class'=>'form-control','placeholder' => 'Seleccione un campus...','required' => 'required')) !!}
    <!--<select class="form-control" id="cbx_campus" name="cbx_campus"></select>-->
    <label for="Nombre">Estado</label>
-   {!! Form::select('estados[]', $estados,[], array('class'=>'form-control')) !!}
+   {!! Form::select('estado', $estados,null, array('class'=>'form-control','placeholder' => 'Seleccione un estado...')) !!}
    <!--<input class="form-control" type="text" id="estado" name="estado" aria-label="Default" aria-describedby="inputGroup-sizing-default">-->
    <label for="Nombre">Nombre (s)</label>
    <input class="form-control" type="text" id="nombre" name="nombre" aria-label="Default" aria-describedby="inputGroup-sizing-default">
@@ -38,29 +38,27 @@
    <input class="form-control" type="text" id="apmaterno" name="apmaterno" aria-label="Default" aria-describedby="inputGroup-sizing-default">
    <label for="fechaNac">Fecha de Nacimiento:</label>
    <input class="form-control" type="date" id="fechanacimiento" name="fechanacimiento" onBlur="comprobarEdad()">
-   <label for="fechaNac">Edad:</label>
+   <label for="edad">Edad:</label>
    <input class="form-control" type="text" id="edad" name="edad">
    <label for="CURP">CURP:</label>
-   <!--<input class="form-control" type="text" id="CURPPG" name="CURPPG" onBlur="comprobarCurp()" required>-->
-   <input class="form-control" type="text" id="CURPPG" name="CURPPG" onBlur="comprobarCurp()">
-   <p><img src="LoaderIcon.gif" id="loaderIcon"  style="display:none" /></p>
+   <input class="form-control" type="text" id="CURPPG" name="CURPPG" onBlur="comprobarCurp()" required>
+   <label for="Nacionalidad">Nacionalidad:</label>
+   <input class="form-control" type="text" id="nacionalidad" name="nacionalidad" onBlur="comprobarCurp()" required>
+
    <span id="estadocurp"></span>
    <label for="Nombre">SUELDO DIARIO</label>
-   <!--   <input class="form-control" type="text" id="sueldodiario" name="sueldodiario" aria-label="Default" aria-describedby="inputGroup-sizing-default" required value="">-->
-   <input class="form-control" type="text" id="sueldodiario" name="sueldodiario" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="">
+   <input class="form-control" type="text" id="sueldodiario" name="sueldodiario" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="" required>
    <label for="foto">Foto:</label>
    <input class="form-control" type="file" id="imagen" name="imagen">
-   <label for="numsegurosocial">NUMERO SEGURO SOCIAL (NSS):</label>
-   <input class="form-control" type="text" id="numsegurosocial" name="numsegurosocial">
+
+   <label for="horario">Horario:</label>
+   <input class="form-control" type="text" id="horario" name="horario">
+   
    <label for="puesto">PUESTO:</label>
-   {!! Form::select('puesto', $puestos,$puestos,array('class'=>'form-control')) !!}
+   {!! Form::select('puesto', $puestos,null,array('class'=>'form-control','placeholder' => 'Seleccione un puiesto...','required' => 'required')) !!}
    <!--<input class="form-control" type="text" id="puesto" name="puesto">-->
    <label for="cuip">CUIP:</label>
    <input class="form-control" type="text" id="cuip" name="cuip">
-   <label for="vigencia">VIGENCIA:</label>
-   <input class="form-control" type="date" id="vigencia" name="vigencia">
-   <label for="fechaIngreso">Fecha de Ingreso:</label>
-   <input class="form-control" type="date" id="fechaIngreso" name="fechaIngreso">
    <button id="btn_enviar" type="submit" class="btn btn-primary btn-lg d-block mx-auto" style="background-color:green;" name="btn_enviar">REGISTRAR GUARDIA</button>
    {!! Form::close() !!}
 

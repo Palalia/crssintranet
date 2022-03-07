@@ -37,7 +37,6 @@ class CreateExpedientesTable extends Migration
         Schema::create('expedientes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-
             $table->string('apellido_paterno');
             $table->string('apellido_materno');
             $table->date('fecha_nacimiento');
@@ -47,16 +46,13 @@ class CreateExpedientesTable extends Migration
             $table->float('sueldo_diario')->nullable();
             $table->string('foto')->nullable();
             $table->string('cuip')->nullable();
-            //vigencia
-            $table->date('fecha_ingreso');
-            $table->date('inicio_contrato');
-            $table->date('final_contrato');
             $table->string('horario')->nullable();
             $table->enum('status',['pospecto','contratado','baja']);//prospecto,contratado,baja
-            $table->timestamps();
             $table->foreignId('idcampus')->references('id')->on('campus')->nullable();
             $table->foreignId('idpuesto')->references('id')->on('roles')->nullable();               
-            $table->foreignId('idestado')->references('id')->on('estados')->nullable();       
+            $table->foreignId('idestado')->references('id')->on('estados')->nullable();
+            $table->foreignId('idcliente')->references('id')->on('clientes')->nullable();   
+            $table->timestamps();    
         });
     }
     
