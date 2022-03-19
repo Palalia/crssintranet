@@ -13,23 +13,22 @@ class ProspectosController extends Controller
 {
     public function index()
     {   
+        $prospectos=Expediente::paginate(5);
+        return view('prospectos.index',compact('prospectos'));
+    }
+    public function create(){
         $campus=collect(); 
         $clientes=collect();
         $puestos=collect();
         $estados=collect();    
-        //foreach (Campus::pluck('nombre')->all() as $unidad)
-            $campus=Campus::pluck('nombre','nombre');
-        //foreach (Cliente::pluck('nombre')->all() as $unidad)
-            $clientes=Cliente::pluck('nombre','nombre');
-        //foreach (Role::pluck('name')->all() as $unidad)
-            $puestos=Role::pluck('name','name');
-        //foreach(DB::table('estados')->pluck('nombre')->all() as $estado)
-            $estados=DB::table('estados')->pluck('nombre','nombre');        
+        $campus=Campus::pluck('nombre','nombre');
+        $clientes=Cliente::pluck('nombre','nombre');
+        $estados=DB::table('estados')->pluck('nombre','nombre');        
+        $puestos=Role::pluck('name','name');
         return view('prospectos.registrar',compact('campus','clientes','puestos','estados'));
     }
     public function store(Request $request)
     {
-        Log::debug($request->all());
         $this->validate($request,[
             'estado'=>'required|exists:estados,nombre',
             'nombre' => 'required',
@@ -46,7 +45,6 @@ class ProspectosController extends Controller
             'vigencia' => 'date|after:tomorrow',
             'fechaIngreso' => 'date',
         ]);
-        //$input=$request->all();
         try {
             $cliente=Cliente::where('nombre',$request->input('cliente'))->first();
             $campus=Campus::where('nombre',$request->input('campus'))->first();
@@ -80,4 +78,58 @@ class ProspectosController extends Controller
         }
         return response()->json(["message","ok"],200);  
     }
+    public function show($id)
+    {
+        if($prospecto=Expediente::find($id)){
+            $puesto=Role::find($prospecto->idpuesto);
+            $estado=DB::table('estados')->select('nombre')->find($prospecto->idestado);     
+            $estado=$estado->nombre;
+            return view('prospectos.showProspecto',compact('prospecto','puesto','estado'));
+        }else{
+            return response()->json("user not found",404);
+        }
+    }
+    public function edit($id)
+    {
+       if($prospecto=Expediente::find($id)){
+        $campus=collect(); 
+        $clientes=collect();
+        $puestos=collect();
+        $estados=collect();    
+        $campus=Campus::pluck('nombre','nombre');
+        $clientes=Cliente::pluck('nombre','nombre');
+        $estados=DB::table('estados')->pluck('nombre','nombre');        
+        $puestos=Role::pluck('name','name');
+        return view('prospectos.editar',compact('prospecto','campus','clientes','puestos','estados'));
+       }else{
+        return response()->json("user not found",404);
+       }
+        
+    }
+    public function update(UpdateUserRequest $request, $id){
+        $prospecto = Expediente::find($id);
+        $this->validate($request,[
+            'estado'=>'exists:estados,nombre',
+            'fechanacimiento' => 'date',
+            'edad' => 'numeric',
+            'CURPPG' => 'unique:expedientes,curp',
+            'sueldodiario' => 'numeric',
+            'imagen' => 'image|mimes:jpg,png,jpeg,gif,svg',
+            'numsegurosocial' => 'numeric',
+            'puesto'=>'exists:roles,name',
+            'cuip' => 'string',
+            'vigencia' => 'date|after:tomorrow',
+            'fechaIngreso' => 'date',
+        ]);
+        DB::beginTransaction();
+        try {
+            $prospecto->update($request->all());
+            DB::commit();
+            return route('prospectos.index');
+        }catch(\Throwable $th){
+            DB::rollback();
+        }
+
+    }
+
 }

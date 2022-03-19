@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -19,7 +19,10 @@ class SuperAdminSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;'); // Desactivamos la revisión de claves foráneas
+        DB::table('users')->truncate();
+        DB::table('roles')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
         $usuario = User::create([
             'name'=> 'alan',
             'email'=> 'c3za1@gmail.com',

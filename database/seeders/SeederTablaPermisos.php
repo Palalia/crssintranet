@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-//
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class SeederTablaPermisos extends Seeder
@@ -16,6 +16,10 @@ class SeederTablaPermisos extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;'); // Desactivamos la revisión de claves foráneas
+        DB::table('permissions')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
+
         //
         $permisos = [
             //tabla roles
@@ -28,6 +32,16 @@ class SeederTablaPermisos extends Seeder
             'crear-blog',
             'editar-blog',
             'borrar-blog',
+            //usuarios
+            'ver-usuario',
+            'crear-usuario',
+            'editar-usuario',
+            'borrar-usuario',
+            //prospectos
+            'ver-prospecto',
+            'crear-prospecto',
+            'editar-prospecto',
+            'borrar-prospecto',
         ];
         foreach($permisos as $permiso){
             Permission::create(['name'=>$permiso]);

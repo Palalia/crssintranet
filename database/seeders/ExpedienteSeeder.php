@@ -15,6 +15,12 @@ class ExpedienteSeeder extends Seeder
      */
     public function run()
     {
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;'); // Desactivamos la revisión de claves foráneas
+        DB::table('clientes')->truncate();
+        DB::table('estados')->truncate();
+        DB::table('campus')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
         Cliente::create([
             'nombre'=>'cliente1'
         ]); 
