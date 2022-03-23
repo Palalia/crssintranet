@@ -5,6 +5,16 @@
         <div class="section-header">
             <h3 class="page__heading">Prospectos</h3>
         </div>
+        @if ($errors->any())
+        <div class="alert alert-dark alert-dismissible fade show" role="alert">
+            @foreach ($errors->all() as $error )
+                <span class="badge badge-danger">{{$error}}</span>
+            @endforeach
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">

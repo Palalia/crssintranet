@@ -31,17 +31,17 @@ class ProspectosController extends Controller
     {
         $this->validate($request,[
             'estado'=>'required|exists:estados,nombre',
-            'nombre' => 'required',
-            'appaterno' => 'required',
-            'apmaterno' => 'required',
+            'nombre' => 'required|alpha',
+            'appaterno' => 'required|alpha',
+            'apmaterno' => 'required|alpha',
             'fechanacimiento' => 'required',
             'edad' => 'required|numeric',
-            'CURPPG' => 'required|unique:expedientes,curp',
+            'CURPPG' => 'required|unique:expedientes,curp|alpha_num',
             'sueldodiario' => 'numeric',
             'imagen' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
             'numsegurosocial' => 'numeric',
             'puesto'=>'required|exists:roles,name',
-            'cuip' => 'string',
+            'cuip' => 'string|alpha_num',
             'vigencia' => 'date|after:tomorrow',
             'fechaIngreso' => 'date',
         ]);
@@ -76,7 +76,7 @@ class ProspectosController extends Controller
         }catch (\Throwable $th) {
             throw $th;
         }
-        return response()->json(["message","ok"],200);  
+        return $this->index();  
     }
     public function show($id)
     {
@@ -106,30 +106,89 @@ class ProspectosController extends Controller
        }
         
     }
-    public function update(UpdateUserRequest $request, $id){
+    public function update(Request $request, $id){
         $prospecto = Expediente::find($id);
-        $this->validate($request,[
-            'estado'=>'exists:estados,nombre',
-            'fechanacimiento' => 'date',
-            'edad' => 'numeric',
-            'CURPPG' => 'unique:expedientes,curp',
-            'sueldodiario' => 'numeric',
-            'imagen' => 'image|mimes:jpg,png,jpeg,gif,svg',
-            'numsegurosocial' => 'numeric',
-            'puesto'=>'exists:roles,name',
-            'cuip' => 'string',
-            'vigencia' => 'date|after:tomorrow',
-            'fechaIngreso' => 'date',
-        ]);
+        if($request['CURPPG']==$prospecto->curp){
+            $this->validate($request,[
+                'estado'=>'required|exists:estados,nombre',
+                'nombre' => 'required|alpha',
+                'appaterno' => 'required|alpha',
+                'apmaterno' => 'required|alpha',
+                'fechanacimiento' => 'required',
+                'edad' => 'required|numeric',
+                'CURPPG' => 'required|alpha_num',
+                'sueldodiario' => 'numeric',
+                'imagen' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+                'numsegurosocial' => 'numeric',
+                'puesto'=>'required|exists:roles,name',
+                'cuip' => 'string|alpha_num',
+                'vigencia' => 'date|after:tomorrow',
+                'fechaIngreso' => 'date',
+            ]);
+        }else{
+            $this->validate($request,[
+                'estado'=>'required|exists:estados,nombre',
+                'nombre' => 'required|alpha',
+                'appaterno' => 'required|alpha',
+                'apmaterno' => 'required|alpha',
+                'fechanacimiento' => 'required',
+                'edad' => 'required|numeric',
+                'CURPPG' => 'required|unique:expedientes,curp|alpha_num',
+                'sueldodiario' => 'numeric',
+                'imagen' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+                'numsegurosocial' => 'numeric',
+                'puesto'=>'required|exists:roles,name',
+                'cuip' => 'string|alpha_num',
+                'vigencia' => 'date|after:tomorrow',
+                'fechaIngreso' => 'date',
+            ]);
+        }
+
         DB::beginTransaction();
         try {
-            $prospecto->update($request->all());
+            //$prospecto->update($request->all());
+            $cliente=Cliente::where('nombre',$request->input('cliente'))->first();
+            $campus=Campus::where('nombre',$request->input('campus'))->first();
+            $puesto=Role::where('name',$request->input('puesto'))->first();
+            $estado=DB::table('estados')
+            ->where('nombre',$request->input('estado'))
+            ->first();
+            $estado=json_decode(json_encode($estado), true);
+            $estado=$estado['id'];
+            $prospecto->update([
+                'nombre' =>$request->input('nombre'),            
+                'apellido_paterno' =>$request->input('appaterno'),
+                'apellido_materno' =>$request->input('apmaterno'),
+                'fecha_nacimiento' =>$request->input('fechanacimiento'),
+                'idestado'=>$estado,
+                'edad' =>$request->input('edad'),
+                'curp' =>$request->input('CURPPG'),
+                'nacionalidad'=>$request->input('nacionalidad'),
+                'sueldo_diario' =>$request->input('sueldodiario'),
+                'foto' =>$request->input('imagen'),
+                'cuip'=>$request->input('cuip'),
+                'horario'=>$request->input('horario'),
+                'status'=>'prospecto',
+                'idcliente' =>$cliente->id,
+                'idcampus'=>$campus->id,
+                'idpuesto'=>$puesto->id,
+                ]);
             DB::commit();
-            return route('prospectos.index');
+            return $this->index();           
         }catch(\Throwable $th){
             DB::rollback();
+            return $this->index();    
         }
 
     }
-
+    public function destroy($id)
+    {
+        $prospecto=Expediente::find($id);
+        if(!$prospecto){
+            return $this->index();
+        }
+        $prospecto->delete();
+             return $this->index();
+         
+    }   
 }

@@ -17,7 +17,7 @@
       </button>
     </div>
   @endif
-  {!! Form::model($prospecto, ['method' => 'PUT','route' => ['prospectos.update', $prospecto->id]]) !!}
+  {!! Form::model($prospecto, ['method' => 'PUT','route' => ['prospectos.update', $prospecto->id],'enctype'=>'multipart/form-data']) !!}
    <label for="cbx_estado"> Selecciona un Cliente:</label>
    {!! Form::select('cliente', $clientes,[], array('class'=>'form-control','placeholder' => 'Seleccione un cliente...','required' => 'required')) !!}
     <!--<select class="form-control" id="cbx_cliente" name="cbx_cliente" required>-->
@@ -59,7 +59,7 @@
    <!--<input class="form-control" type="text" id="puesto" name="puesto">-->
    <label for="cuip">CUIP:</label>
    <input class="form-control" type="text" id="cuip" name="cuip" value="{{$prospecto->cuip}}">
-   <button id="btn_enviar" type="submit" class="btn btn-primary btn-lg d-block mx-auto" style="background-color:green;" name="btn_enviar">REGISTRAR GUARDIA</button>
+   <button id="btn_enviar" type="submit" class="btn btn-primary btn-lg d-block mx-auto" style="background-color:green;" name="btn_enviar">Editar GUARDIA</button>
    {!! Form::close() !!}
   </div>
  </div>
