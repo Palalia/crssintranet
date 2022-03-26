@@ -17,7 +17,12 @@
         <i class=" fas fa-blog"></i><span>BLOGS</span>
     </a>
     @endcan
+    @can('ver-prospecto')
     <a class="nav-link" href="/prospectos">
         <i class=" fas fa-blog"></i><span>Prospectos</span>
+    </a>
+    @endcan
+    <a class="nav-link" href="/campus">
+        <i class=" fas fa-blog"></i><span>Campus</span>
     </a>
 </li>

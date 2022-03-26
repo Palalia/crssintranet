@@ -8,6 +8,8 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProspectosController;
+use App\Http\Controllers\CampusController;
+
 
 
 /*
@@ -34,4 +36,5 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('blogs', BlogController::class);
     Route::resource('prospectos', ProspectosController::class);
+    Route::resource('campus', CampusController::class);
 });

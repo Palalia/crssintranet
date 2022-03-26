@@ -19,9 +19,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        
                         <div class="card-body">
-                            <A class="btn btn-warning" href="{{ route('prospectos.create') }}">NUEVO </a>
-                            <table class="table table-striped mt-2">
+                        @can('crear-prospecto')
+                        <a class="btn btn-warning" href="{{ route('prospectos.create') }}">NUEVO </a>
+                        @endcan
+                        <table class="table table-striped mt-2">
                                 <thead style="background-color: #005388; ">
                                     <th style="color: #fff;">ID</th>
                                     <th style="color: #fff;">Nombre</th>
