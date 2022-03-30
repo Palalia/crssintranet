@@ -25,4 +25,7 @@
     <a class="nav-link" href="/campus">
         <i class=" fas fa-blog"></i><span>Campus</span>
     </a>
+    <a class="nav-link" href="/clientes">
+        <i class=" fas fa-blog"></i><span>Clientes</span>
+    </a>
 </li>

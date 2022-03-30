@@ -102,7 +102,7 @@ class ProspectosController extends Controller
         $puestos=Role::pluck('name','name');
         return view('prospectos.editar',compact('prospecto','campus','clientes','puestos','estados'));
        }else{
-        return response()->json("user not found",404);
+        return view('campus.editar',compact('clientes','estados',));
        }
         
     }

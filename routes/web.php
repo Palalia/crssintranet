@@ -9,7 +9,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProspectosController;
 use App\Http\Controllers\CampusController;
-
+use App\Http\Controllers\ClienteController;
 
 
 /*
@@ -37,4 +37,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('blogs', BlogController::class);
     Route::resource('prospectos', ProspectosController::class);
     Route::resource('campus', CampusController::class);
+    Route::resource('clientes', ClienteController::class);
+    Route::get('clientes/verCampus/{id}', [ClienteController::class,'verCampus'])->name('clientes.verCampus');
 });
