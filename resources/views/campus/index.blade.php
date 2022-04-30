@@ -9,9 +9,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">       
+                        <div class="card-body">
+                        @can('crear-campus')       
                             <A class="btn btn-warning" href="{{ route('campus.create') }}">NUEVO </a>
-        
+                        @endcan
                             <table class="table table-striped mt-2">
                                 <thead style="background-color: #005388; ">
                                     <th style="display: none;">ID</th>
@@ -32,11 +33,15 @@
                                             <td>{{$campus->cantidad_personal}}</td>
                                             {{-- boton para editar --}}
                                             <td>
+                                            @can('editar-campus')
                                                 <a class="btn btn-info" href="{{route('campus.edit', $campus->id)}}">EDITAR</a>
+                                            @endcan
+                                            @can('borrar-campus')
                                             {{-- boton eliminar --}}
                                                 {!! Form::open(['method'=> 'DELETE', 'route'=> ['campus.destroy', $campus->id], 'style'=>'display:inline']) !!}
                                                     {!! Form::submit('Borrar', ['class'=> 'btn btn-danger']) !!}
                                                 {!! Form::close() !!}
+                                            @endcan    
                                             </td>
                                         </tr>
                                     @endforeach

@@ -12,20 +12,19 @@
         <i class=" fas fa-user-lock"></i><span>ROLES</span>
     </a>
     @endcan
-    @can('ver-blog')
-    <a class="nav-link" href="/blogs">
-        <i class=" fas fa-blog"></i><span>BLOGS</span>
-    </a>
-    @endcan
     @can('ver-prospecto')
     <a class="nav-link" href="/prospectos">
-        <i class=" fas fa-blog"></i><span>Prospectos</span>
+    <i class="fas fa-user-plus"></i><span>Prospectos</span>
     </a>
     @endcan
+    @can('ver-campus')
     <a class="nav-link" href="/campus">
-        <i class=" fas fa-blog"></i><span>Campus</span>
+    <i class="fas fa-school"></i><span>Campus</span>
     </a>
+    @endcan
+    @can('ver-campus')
     <a class="nav-link" href="/clientes">
-        <i class=" fas fa-blog"></i><span>Clientes</span>
+        <i class=" fas fa-handshake"></i><span>Clientes</span>
     </a>
+    @endcan
 </li>

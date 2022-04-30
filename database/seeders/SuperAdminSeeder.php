@@ -25,7 +25,7 @@ class SuperAdminSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
         $usuario = User::create([
             'name'=> 'alan',
-            'email'=> 'c3za1@gmail.com',
+            'email'=> 'admin@gmail.com',
             'password'=> bcrypt('12345678')
         ]);
         $rol = Role::create(['name'=>'ADMINISTRADOR']);
@@ -47,6 +47,3 @@ class SuperAdminSeeder extends Seeder
         $usuario->assignRole('GUARDIA');
     }
 }
-
-//EJECUTAMOS EN CMD PARA GUARDAR UN USUARIO
-//  php artisan db:seed --class SuperAdminSeeder
