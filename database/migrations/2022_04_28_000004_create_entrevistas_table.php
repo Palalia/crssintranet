@@ -22,7 +22,7 @@ class CreateEntrevistasTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('personal_id1');
+            $table->increments('personal_id');
             $table->unsignedInteger('estatura');
             $table->unsignedInteger('peso')->nullable();
             $table->time('hora_inicio_turno');

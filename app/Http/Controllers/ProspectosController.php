@@ -12,9 +12,9 @@ use Spatie\Permission\Models\Role;
 class ProspectosController extends Controller
 {
     public function index()
-    {   
+    {   /*
         $prospectos=Expediente::paginate(5);
-        return view('prospectos.index',compact('prospectos'));
+        return view('prospectos.index',compact('prospectos'));*/
     }
     public function create(){
         $campus=collect(); 
@@ -56,22 +56,30 @@ class ProspectosController extends Controller
             $estado=json_decode(json_encode($estado), true);
             $estado=$estado['id'];
             $prospecto = Expediente::create([
+            'campus_id'=>$campus->id,
+            'salario' =>$request->input('salario'),
+            'tipo_salario'=>'0',///implementar en el formulario
+            'puesto'=>$puesto->name,
+            'status'=>1,
             'nombre' =>$request->input('nombre'),            
             'apellido_paterno' =>$request->input('appaterno'),
             'apellido_materno' =>$request->input('apmaterno'),
-            'fecha_nacimiento' =>$request->input('fechanacimiento'),
-            'idestado'=>$estado,
-            'edad' =>$request->input('edad'),
-            'curp' =>$request->input('CURPPG'),
-            'nacionalidad'=>$request->input('nacionalidad'),
-            'sueldo_diario' =>$request->input('sueldodiario'),
-            'foto' =>$request->input('imagen'),
-            'cuip'=>$request->input('cuip'),
-            'horario'=>$request->input('horario'),
-            'status'=>'prospecto',
+            //'fecha_nacimiento' =>$request->input('fechanacimiento'),
+            //direccion
+            //municipio
+            //colonia
+            //estado
+            //'fecha_nacimiento' =>$request->input('fechanacimiento'),
+            //'edad'
+            //'curp' =>$request->input('CURPPG'),
+            
+            //'foto' =>$request->input('imagen'),
+            //'cuip'=>$request->input('cuip'),
+            //'horario'=>$request->input('horario'),
+            
             'idcliente' =>$cliente->id,
-            'idcampus'=>$campus->id,
-            'idpuesto'=>$puesto->id,
+            
+            
             ]);
         }catch (\Throwable $th) {
             throw $th;
