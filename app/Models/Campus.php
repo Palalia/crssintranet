@@ -12,6 +12,6 @@ class Campus extends Model
     protected $guarded= []; 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class,'idcliente');
-    } 
+        return $this->belongsTo(Cliente::class);
+    }
 }    

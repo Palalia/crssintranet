@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Models\Campus;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +25,6 @@ class UsuarioController extends Controller
         //Sin paginación
         /* $usuarios = User::all();
         return view('usuarios.index',compact('usuarios')); */
-
         //Con paginación
         $usuarios = User::paginate(5);
         return view('usuarios.index',compact('usuarios'));
@@ -126,13 +126,6 @@ class UsuarioController extends Controller
 
         return redirect()->route('usuarios.index');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         User::find($id)->delete();

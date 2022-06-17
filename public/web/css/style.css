@@ -4171,3 +4171,25 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .f-right {
     float: right;
 }
+.input-text:hover{
+    border-color: #95a0f4;
+}
+.input-text:focus,
+.input-number:focus{
+    background-color: #fefeff;
+    border-color: #95a0f4;
+}   
+.input-number:hover{
+    border-color: #95a0f4;
+}
+.input-text,
+.input-number{
+    background-color: #fdfdff;
+    border-color: #e4e6fc;
+}
+#regiration_form fieldset:not(:first-of-type) {
+    display: none;
+  }
+input[type=time]::-webkit-datetime-edit-ampm-field {
+    display: none;
+  }

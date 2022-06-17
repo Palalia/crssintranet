@@ -34,7 +34,8 @@ class CreatePersonalTable extends Migration
 1:prospecto
 2:contratado
 3:rechazado
-');
+');         $table->date('fecha_nacimiento');
+            $table->integer('edad');  
             $table->string('observacion_status')->nullable();
             $table->string('nombre', 45);
             $table->string('apellido_paterno', 45);
@@ -46,10 +47,8 @@ class CreatePersonalTable extends Migration
             $table->string('telefono', 13)->nullable();
             $table->timestamps();
             $table->unique(["id"], 'id_UNIQUE');
-
+            
             $table->index(["campus_id"], 'fk_personal_campus1_idx');
-
-
             $table->foreign('campus_id', 'fk_personal_campus1_idx')
                 ->references('id')->on('campus')
                 ->onDelete('no action')

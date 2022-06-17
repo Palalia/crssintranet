@@ -18,14 +18,15 @@
     </div>
   @endif
   {!! Form::open(array('route'=>'prospectos.store', 'method'=>'POST','enctype'=>'multipart/form-data')) !!}
-   <label for="cbx_estado"> Selecciona un Cliente:</label>
-   {!! Form::select('cliente', $clientes,[], array('class'=>'form-control','placeholder' => 'Seleccione un cliente...','required' => 'required')) !!}
+   <label> Selecciona un Cliente:</label>
+   {!! Form::select('cliente', $clientes,[], array('class'=>'form-control','placeholder'=>'Seleccione un cliente...','id'=>'cliente','onchange'=>"ClienteSelected();",'required' => 'required')) !!}
     <!--<select class="form-control" id="cbx_cliente" name="cbx_cliente" required>-->
-    <!--<select class="form-control" id="cbx_cliente" name="cbx_cliente">-->
-                 
    <label for="cbx_sucursal"> Selecciona el Campus:</label>
    <!--<select class="form-control" id="cbx_campus" name="cbx_campus" required></select>-->
-   {!! Form::select('campus', $campus,null, array('class'=>'form-control','placeholder' => 'Seleccione un campus...','required' => 'required')) !!}
+   <select name="campus" id='campus' class="form-control" required>
+   <option disabled selected>Seleccione cliente... </option> 
+     <option value="-">- 
+   </select>
    <!--<select class="form-control" id="cbx_campus" name="cbx_campus"></select>-->
    <label for="Nombre">Estado</label>
    {!! Form::select('estado', $estados,null, array('class'=>'form-control','placeholder' => 'Seleccione un estado...')) !!}
@@ -41,55 +42,85 @@
    <label for="edad">Edad:</label>
    <input class="form-control" type="text" id="edad" name="edad">
    <label for="CURP">CURP:</label>
-   <input class="form-control" type="text" id="CURPPG" name="CURPPG" onBlur="comprobarCurp()" required>
+   <input class="form-control" type="text" id="CURPPG" name="curp" onBlur="comprobarCurp()" required>
    <label for="Nacionalidad">Nacionalidad:</label>
    <input class="form-control" type="text" id="nacionalidad" name="nacionalidad" onBlur="comprobarCurp()" required>
-
+   <label>Comentarios status de prospecto</label>
+   <input class="form-control" type="text" name="comentarios" >
+   <label>Direccion</label>
+   <input class="form-control" type="text" placeholder="Calle #numero" name="direccion" >
+   <label>Municipio</label>
+   <input class="form-control" type="text" name="municipio" >
+   <label>Colonia</label>
+   <input class="form-control" type="text" name="colonia" >
+   <label>Telefono</label>
+   <input class="form-control" type="text" name="telefono" >
    <span id="estadocurp"></span>
-   <label for="Nombre">SUELDO DIARIO</label>
-   <input class="form-control" type="text" id="sueldodiario" name="sueldodiario" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="" required>
+   <label for="Nombre">SUELDO</label>
+   <input class="form-control" type="text" name="sueldo" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="" required>
+   <label for="Nombre" placeholder="Seleccione typo de sueldo..." required>TIPO SUELDO</label>
+   <select class="form-control" name="tipo_salario" >
+   <option disabled selected>Selecciona una opción</option>
+    <option value='0'>Diario</option>
+    <option value='1'>Semanal</option>
+    <option value='2'>Quinsenal</option>
+    <option value='3'>Mensual  </option>
+   </select>
    <label for="foto">Foto:</label>
    <input class="form-control" type="file" id="imagen" name="imagen">
+   <br>
+   <label for="horaInicio">Hora inicio de turno:</label>
+   <input type="time" id="myTime"  name="hora_inicio_turno">
+   <label for="horaFin">Hora fin de turno:</label>
+   <input type="time" id="myTime"  name="hora_fin_turno">
 
-   <label for="horario">Horario:</label>
-   <input class="form-control" type="text" id="horario" name="horario">
-   
-   <label for="puesto">PUESTO:</label>
-   {!! Form::select('puesto', $puestos,null,array('class'=>'form-control','placeholder' => 'Seleccione un puiesto...','required' => 'required')) !!}
+   <label class="form-control" for="puesto">PUESTO:</label>
+   {!! Form::select('puesto', $puestos,null,array('class'=>'form-control','placeholder' => 'Seleccione un puesto...','required' => 'required')) !!}
    <!--<input class="form-control" type="text" id="puesto" name="puesto">-->
    <label for="cuip">CUIP:</label>
    <input class="form-control" type="text" id="cuip" name="cuip">
    <button id="btn_enviar" type="submit" class="btn btn-primary btn-lg d-block mx-auto" style="background-color:green;" name="btn_enviar">REGISTRAR GUARDIA</button>
    {!! Form::close() !!}
-
- <script type="text/javascript">
- function validaNumericos(event) {
-    if(event.charCode >= 48 && event.charCode <= 57){
-      return true;
-     }
-     return false;        
- }
-
- function comprobarCurp() {
-	$("#loaderIcon").show();
-	jQuery.ajax({
-	url: "ComprobarCurp.php",
-	data:'CURPPG='+$("#CURPPG").val(),
-	type: "POST",
-	success:function(data){
-		$("#estadocurp").html(data);
-		$("#loaderIcon").hide();
-	},
-	error:function (){}
-	});
- }
-
-
+ <script>
+   function myFunction() {///24 horas en tyme
+	        var x = document.getElementById("myTime").value;
+	        document.getElementById("demo").innerHTML = x;
+    }
+    function ClienteSelected(){
+      /* Para obtener el valor */
+      var cod = document.getElementById("cliente").value;
+      if(cod==""){
+        document.getElementById("campus").innerHTML="<option disabled selected>Seleccione cliente... </option>";
+        //var select=document.getElementById("campus");
+      }else{
+        var arreglo;
+        const Http= new XMLHttpRequest();
+        Http.open('get',`../api/getCampus/${cod}`);
+        // Http.setRequestHeader('Authorization', 'Bearer ' +'{{ csrf_token() }}');
+        Http.send();    	
+        Http.onreadystatechange  =function(){
+         if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("campus").innerHTML="";
+          var resul=(Http.responseText);
+          var aux=resul.replace(/[^a-z+0-9+,]/ig,"");
+          arreglo=aux.split(",");
+          var select=document.getElementById("campus");
+          arreglo.forEach(function(item){
+            var opt = document.createElement('option');
+            opt.value = item;
+            opt.innerHTML = item;
+            select.appendChild(opt);
+            }
+          ); 
+         }
+        }
+      }
+    }
  //comprobar Edad - fecha de nacimiento
  function comprobarEdad() {
 	//$("#loaderIcon").show();
 	jQuery.ajax({
-	url: "calcular.php",
+	url: "calcularEdad.php",
 	data:'fecha='+$("#fechanacimiento").val(),
 	type: "POST",
 	success:function(data){
@@ -142,4 +173,5 @@
  </div>
 
 </div>
+</section>
 @endsection

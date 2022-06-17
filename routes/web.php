@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 use Illuminate\Support\Facades\Route;
 
@@ -10,8 +10,6 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProspectosController;
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\ClienteController;
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,11 +21,7 @@ use App\Http\Controllers\ClienteController;
 |
 */
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
-
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/', function () {
         return view('home');
@@ -36,6 +30,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('blogs', BlogController::class);
     Route::resource('prospectos', ProspectosController::class);
+    Route::get('prospectos.entrevista', [ProspectosController::class,'entrevista'])->name('prospectos.entrevista');
     Route::resource('campus', CampusController::class);
     Route::resource('clientes', ClienteController::class);
     Route::get('clientes/verCampus/{id}', [ClienteController::class,'verCampus'])->name('clientes.verCampus');

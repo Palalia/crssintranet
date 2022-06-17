@@ -10,5 +10,4 @@ class Cliente extends Model
     use HasFactory;
     protected $table = 'clientes';
     protected $guarded= [];
-    
 }

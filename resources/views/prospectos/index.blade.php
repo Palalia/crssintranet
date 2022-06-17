@@ -45,18 +45,28 @@
                                             <td>
                                                 <h5><span class="badge badge-dark">{{$prospecto->campus->nombre}}</span></h5>    
                                             </td>
-                                            <td>{{$prospecto->cliente->nombre}}</td>
-                                            {{-- boton para editar --}}
+                                            <td>{{$prospecto->campus->cliente->nombre}}</td>
+                                            
                                             <td>
-                                                @can('editar-prospecto')
-                                                <a class="btn btn-info" href="{{route('prospectos.edit', $prospecto->id)}}">EDITAR</a>
-                                                @endcan
+                                            @can('entreistar')
+                                                <a class="btn btn-primary">Entrevistar</a>
+                                            @endcan
+                                            @can('contratar')
+                                                <a class="btn btn-success">Contratar</a><!--si ya se hizo la entrevista que se vea este boton -->
+                                            @endcan
+                                            {{-- boton para editar --}}
+                                            @can('editar-prospecto')
+                                                <a class="btn btn-info" href="{{route('prospectos.edit', $prospecto->id)}}">Editar</a>
+                                                @endcan  
                                             {{-- boton eliminar --}}
                                                 @can('borrar-prospecto')
                                                 {!! Form::open(['method'=> 'DELETE', 'route'=> ['prospectos.destroy', $prospecto->id], 'style'=>'display:inline']) !!}
                                                     {!! Form::submit('Borrar', ['class'=> 'btn btn-danger']) !!}
                                                 {!! Form::close() !!}
                                                 @endcan
+                                            {{-- boton contratar --}}    
+                                            
+                                           
                                             </td>
                                         </tr>
                                     @endforeach
