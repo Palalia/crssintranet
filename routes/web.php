@@ -10,6 +10,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProspectosController;
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -40,3 +41,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('clientes', ClienteController::class);
     Route::get('clientes/verCampus/{id}', [ClienteController::class,'verCampus'])->name('clientes.verCampus');
 });
+
+Route::get('/registro',[UserController::class,'index']); //retorna formulario registro
+Route::post('datos', [UserController::class,'store']); // hace el registro
+
+Route::get('mostrar',[UserController::class,'VerRegistros']); // muestra registros todos
+
+Route::get('consulta',[UserController::class,'show']); //retorna formulario para consultar
+Route::get('editar',[UserController::class,'show2']); // retorna formulario para editar -- mismo consulta
+Route::get('cambios',[UserController::class,'actUser']); // realiza el cambio en los datos del registro
+
+Route::get('eliminar',[UserController::class,'delete']); 
+Route::delete('borrar',[UserController::class,'destroy']);

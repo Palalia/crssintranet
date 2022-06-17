@@ -157,6 +157,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name'=>'nombre',
+        'apellidoP'=>'Apellido Paterno',
+        'apellidoM'=>'Apellido Materno',
+        
+    ],
 
 ];
