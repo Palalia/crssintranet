@@ -34,7 +34,7 @@ class ProspectosController extends Controller
     }
     public function store(Request $request)
     {  
-        Log::debug($request);
+        
         $mensages=[
             'curp.max'=>'curp debe constar de 18 caracteres',
             'curp.min'=>'curp debe constar de 18 caracteres',
@@ -204,8 +204,5 @@ class ProspectosController extends Controller
     }   
     public function entrevista(){
         return view ('prospectos.entrevista',);
-    }
-    public function decreaseStep(){
-        Log::debug("dentro de decreasetep");
     }
 }
